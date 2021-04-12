@@ -7,95 +7,124 @@ typedef struct
     int arr[];
 } SmartArray;
 
-void create_array(int length);           // for creating smart array
-void input(int value, int index_number); //store values only left aligned | should not store value any where
-void print_element(int index_number);
-void insert_element_on_index(int index_number, int value);
-void delete_element_to_index(int index_number);
-int stored_elements(); //have to check how many value entered in array!!!
-int total_capacity();
+// for creating smart array
+void create_array(SmartArray *name, int length);
+//store values only left aligned | should not store value any where
+void input(SmartArray *name, int value, int index_number);
+void print_element(SmartArray *name, int index_number);
+void insert_element_on_index(SmartArray *name, int index_number, int value);
+void delete_element_to_index(SmartArray *name, int index_number);
+int stored_elements(SmartArray *str_ele); //have to check how many value entered in array!!!
+int total_capacity(SmartArray *name);
 
-int main(void)
+int main()
 {
-    create_array(1);
-    input(4, 0);
-    input(7, 1);
-    input(48, 2);
-    print_element(0);
-    print_element(1);
-    print_element(2);
+    SmartArray arr;
 
-    printf("%d", stored_elements());
+    create_array(&arr, 3);
+    input(&arr, 4,0);
+    input(&arr, 7,1);
+    input(&arr, 6,2);
+
+    print_element(&arr,0);
+    print_element(&arr,1);
+    print_element(&arr,2);
+
+    printf("After change\n");
+    insert_element_on_index(&arr,1,99);
+
+    print_element(&arr,0);
+    print_element(&arr,1);
+    print_element(&arr,2);
+    print_element(&arr,3);
 
     return 0;
 }
 
-void insert_element_on_index(int index_number, int value)
+void insert_element_on_index(SmartArray *name, int index_number, int value)
 {
-    SmartArray *ele;
+    int i;
+    name->arr_total_capacity++;
+    name->arr[name->arr_total_capacity];
 
-    int i, temp;
-    ele->arr_total_capacity++;
-    ele->arr[ele->arr_total_capacity];
-
-    for (i = index_number; i < ele->arr_total_capacity; i++)
+    for (i = total_capacity(name); i >= index_number; i--)
     {
-        temp = ele->arr[i];
-        ele->arr[i + i] = ele->arr[i];
-        ele->arr[i] = temp;
+         name->arr[i] = name->arr[i - 1] ;
     }
 
-    ele->arr[index_number] = value;
+    input(name,value, index_number);
 }
 
-void create_array(int length)
+void delete_element_to_index(SmartArray *name, int index_number)
 {
-    SmartArray *size;
-    size->arr_total_capacity = length;
+    int i;
+    name->arr_total_capacity--;
+    name->arr[name->arr_total_capacity];
 
-    if (size->arr_total_capacity < 1)
+    for (i = index_number; i < name->arr_total_capacity; i++)
+    {
+        name->arr[index_number] = name->arr[index_number + 1];
+    }
+}
+
+void input(SmartArray *name, int value, int index_number)
+{
+    if(index_number < name->arr_total_capacity)
+    {
+        name->arr[index_number] = value;
+        name->arr_stored_elements++;
+    }
+    else
+    {
+        printf("Please check your array size, Your array size is different");
+        exit(0);
+    }
+}
+
+void print_element(SmartArray *name, int index_number)
+{
+    if (index_number < name->arr_total_capacity)
+    {
+        printf("Element %d is %d\n", index_number, name->arr[index_number]);
+    }
+    else
+    {
+        printf("You can't access more than your array size");
+        exit(0);
+    }
+}
+
+void create_array(SmartArray *name, int length)
+{
+    name->arr_total_capacity = length;
+
+    if (name->arr_total_capacity < 1)
     {
         printf("Invalid input!!!");
         exit(0);
     }
     else
     {
-        size->arr[size->arr_total_capacity];
-        printf("Your array is created with capacity of %d\n", size->arr_total_capacity);
-        size->arr_stored_elements = 0;
+        name->arr[name->arr_total_capacity];
+        printf("Your array is created with capacity of %d\n", length);
+        name->arr_stored_elements=0;
     }
 }
 
-void input(int value, int index_number)
+int stored_elements(SmartArray *str_ele)
 {
-    SmartArray *input;
-    int i;
-    i = 0;
-
-    if (input->arr_total_capacity > 0)
-    {
-        input->arr[index_number] = value;
-        ++i;
-    }
-    input->arr_stored_elements = i;
-}
-
-void print_element(int index_number)
-{
-    SmartArray *print;
-
-    if (print->arr_total_capacity > 0)
-    {
-        printf("Element %d is %d\n", index_number, print->arr[index_number]);
-    }
-}
-
-int stored_elements()
-{
-    SmartArray *str_ele;
 
     if (str_ele->arr_total_capacity < 1)
         return str_ele->arr_stored_elements = 0;
 
     return str_ele->arr_stored_elements;
 }
+
+int total_capacity(SmartArray *name)
+{
+    if(name->arr_total_capacity < 1)
+        return name->arr_total_capacity = 0;
+
+    return name->arr_total_capacity;
+}
+
